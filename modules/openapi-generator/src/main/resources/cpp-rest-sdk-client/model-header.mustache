@@ -93,17 +93,31 @@ public:
     {{#vars}}
     {{^isInherited}}
     /// <summary>
-    /// {{description}}
+     /// Gets the value of {{baseName}}.
     /// </summary>
-    {{#isContainer}}{{{dataType}}}& {{getter}}();
-    {{/isContainer}}{{^isContainer}}{{{dataType}}} {{getter}}() const;
-    {{/isContainer}}bool {{nameInCamelCase}}IsSet() const;
+    {{#isContainer}}{{{dataType}}}& {{getter}}();{{/isContainer}}
+    {{^isContainer}}{{{dataType}}} {{getter}}() const;{{/isContainer}}
+
+    /// <summary>
+    /// Gets whether {{baseName}} has been set.
+    /// </summary>
+
+    bool {{nameInCamelCase}}IsSet() const;
+    /// <summary>
+    /// Unsets the value of {{baseName}}.
+    /// </summary>
     void unset{{name}}();
 
     {{#isPrimitiveType}}
     void {{setter}}({{{dataType}}} value);
     {{/isPrimitiveType}}
     {{^isPrimitiveType}}
+    /// <summary>
+    /// Sets the value of {{baseName}}.
+    {{#allowableValues}}
+    /// The valid values are: {{#values}}"{{.}}", {{/values}}
+    {{/allowableValues}}
+    /// </summary>
     void {{setter}}(const {{{dataType}}}& value);
     {{/isPrimitiveType}}
 

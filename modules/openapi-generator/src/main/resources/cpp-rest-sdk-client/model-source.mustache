@@ -132,6 +132,7 @@ void {{classname}}::setValue({{classname}}::e{{classname}} const value)
 
 {{classname}}::{{classname}}()
 {
+    m_className = U("{{classname}}");
     {{#vars}}
     {{^isInherited}}
     {{^isContainer}}
@@ -173,6 +174,16 @@ web::json::value {{classname}}::toJson() const
     {
         val[utility::conversions::to_string_t(U("{{baseName}}"))] = ModelBase::toJson(m_{{name}});
     }{{/isInherited}}{{/vars}}
+    {{#discriminator}}
+
+    // Apply the discriminator
+    {{#mappedModels}}
+    if (this->m_className == "{{mappingName}}") {
+        val[utility::conversions::to_string_t(U("{{propertyBaseName}}"))] = ModelBase::toJson(utility::string_t("{{modelName}}"));
+    }
+    
+    {{/mappedModels}}
+    {{/discriminator}}
 
     return val;
 }

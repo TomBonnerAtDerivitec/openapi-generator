@@ -138,6 +138,7 @@ public:
     static std::shared_ptr<std::istream> fromBase64( const utility::string_t& encoded );
 protected:
     bool m_IsSet;
+    utility::string_t m_className;
 };
 
 template <typename T>
